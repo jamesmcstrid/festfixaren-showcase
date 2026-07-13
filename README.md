@@ -2,11 +2,9 @@
 
 **Plan a Swedish bachelorette or bachelor party without the group chat chaos.**
 
-🎉 **Live at [festfixaren.fredskvist.com](https://festfixaren.fredskvist.com)** · Free, no account needed · In Swedish
+**Live at [festfixaren.fredskvist.com](https://festfixaren.fredskvist.com)** · Free, no account needed · In Swedish
 
-<!-- TODO: screenshot here. Suggestion: program page on mobile, it's the prettiest view -->
-
-## The problem
+<img width="1454" height="1311" alt="Skärmavbild 2026-07-13 kl  10 47 53" src="https://github.com/user-attachments/assets/36569d44-9641-43f7-a25c-8565bc426ebc" />## The problem
 
 Every möhippa (bachelorette) and svensexa (bachelor party) starts the same way: a group chat with twenty ideas, forty unread messages and zero decisions. Someone has to chase everyone for dates, keep the plan secret from the guest of honor, coordinate the day and then untangle who owes whom afterwards.
 
