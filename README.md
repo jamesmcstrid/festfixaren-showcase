@@ -1,30 +1,55 @@
 # FestFixaren
 
-FestFixaren är en webbapp som gör det enkelt att planera möhippor och svensexor tillsammans med hela gänget — utan kaos.
+**Plan a Swedish bachelorette or bachelor party without the group chat chaos.**
 
-## Problemet
+🎉 **Live at [festfixaren.fredskvist.com](https://festfixaren.fredskvist.com)** · Free, no account needed · In Swedish
 
-Alla som planerat en möhippa eller svensexa känner igen det: en gruppchatt med 15 personer, hundratals meddelanden och en fråga som ingen vågar ställa rakt ut — "hur mycket vill du egentligen lägga?" Budgetdiskussioner drunknar i emojis och halvfärdiga förslag, arrangören sitter kvar med allt ansvar, och till slut blir det ändå bara ett gissningsspel om vad gruppen faktiskt vill och har råd med.
+<!-- TODO: screenshot here. Suggestion: program page on mobile, it's the prettiest view -->
 
-## Hur det funkar
+## The problem
 
-1. **Arrangören skapar en planering** för möhippan/svensexan och får en unik länk.
-2. **Länken delas** med gästerna — inget konto eller app krävs.
-3. **Gästerna svarar anonymt** på ett kort quiz om preferenser samt vad de är bekväma att lägga budgetmässigt.
-4. **FestFixaren matchar** gruppens svar mot aktiviteter och middagsalternativ som passar både stämning och plånbok.
+Every möhippa (bachelorette) and svensexa (bachelor party) starts the same way: a group chat with twenty ideas, forty unread messages and zero decisions. Someone has to chase everyone for dates, keep the plan secret from the guest of honor, coordinate the day and then untangle who owes whom afterwards.
 
-Resultatet: arrangören får ett tydligt underlag att jobba vidare med, och ingen gäst behöver säga sin budget högt i gruppchatten.
+FestFixaren replaces that with one shared page.
 
-## Tech stack
+## What it does
 
-- **React** för gränssnittet
-- **Cloudflare Pages** för hosting och driftsättning
-- **Cloudflare D1** som databas
+- **Date voting.** The group votes on dates that work. The best one wins. No more chasing people one by one.
+- **A shareable program page.** Schedule, meeting points and activities on one link, with proper link previews when shared in chats. Visible to guests, hidden from the guest of honor.
+- **Expense splitting via Swish.** One or two people pay up front, the app calculates who swishes whom afterwards. No receipts, no spreadsheet.
+- **Post-party reviews.** Guests rate the day afterwards. Names and cities are only ever shown with active consent, and nothing is published without moderation.
+- **City guides.** Curated activity and restaurant tips for Gothenburg and Stockholm, by party type.
 
-## Prova FestFixaren
+## How it's built
 
-👉 [festfixaren.fredskvist.com](https://festfixaren.fredskvist.com)
+React 18 + Vite frontend, Cloudflare Pages Functions backend, Cloudflare D1 (SQLite) database. Fully serverless, deploys automatically from this repo.
 
----
+A few decisions worth mentioning:
 
-*Detta repo innehåller endast en projektpresentation — ingen källkod.*
+- **Privacy by design.** No accounts, no tracking. Rate limiting hashes visitor IPs (SHA-256, salted per party) before anything touches the database, so raw IPs are never stored. Review names require explicit opt-in consent, and consent alone is not enough for publication: an approval step gates the public feed.
+- **Token-based access.** Organizers and guests get capability URLs with 128-bit random tokens instead of logins. Less friction for a product people use once, smaller attack surface.
+- **Staging before production.** A separate branch and D1 database mirror production. Schema migrations always run before code deploys, never after.
+
+## How it was built
+
+FestFixaren is developed with AI coding agents (Claude Code) under human direction, with the discipline you'd expect from a production system:
+
+- Adversarial code reviews run in separate agent sessions that haven't seen the code being written. Findings are triaged by severity and fixed before anything ships.
+- The production database is never touched by an agent. All production migrations are run manually, by a human, after staging verification.
+- Every release path: build on staging branch → independent review → staging deploy and manual test → production migration → merge to main.
+
+The interesting part isn't that AI wrote code. It's that the process around it (reviews, staging, migration ordering, least-privilege rules for agents) is what made it safe to ship fast.
+
+## Roadmap
+
+- Review approval flow for organizers
+- More cities and party types
+- Partner-tagged recommendations (structure in place, intentionally unused until there's traffic to justify it)
+
+## About this repo
+
+The application source lives in a private repository. This repo is the public showcase: product overview, screenshots and documentation. Curious about the code or the process? Get in touch.
+
+## Contact
+
+Built by Dennis Fredin. Questions, feedback or party disasters averted: hej@fredskvist.com
